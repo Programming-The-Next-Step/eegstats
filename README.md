@@ -1,1 +1,3 @@
 # eegstats
+
+# example code
