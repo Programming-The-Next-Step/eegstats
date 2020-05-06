@@ -6,6 +6,7 @@ I am going to create the R package "eegstats" that will allow the user to perfor
 First, I will implement basic functions, such as:
 - loading in the data file
 - baseline correction
+- outlier correction
 
 As a second step, I aim to implement functions that allow the user to create time - frequency plots based upon pre-processed data.
 
@@ -15,4 +16,4 @@ EEG analyses in R have long been neglected so it's finally time to implement tho
 
 
 # Code
-All functions will be programmed in R. Existing plotting functions that exist in the widely used "eeglab" package in Matlab will be adapted. 
+All functions will be programmed in R. Existing plotting functions that exist in the widely used "eeglab" package in Matlab will be adapted.
