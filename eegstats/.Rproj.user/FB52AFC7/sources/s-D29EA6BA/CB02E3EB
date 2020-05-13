@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589403856624.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "CB02E3EB",
+    "lastKnownWriteTime" : 1589361769,
+    "last_content_update" : 1589361769,
+    "path" : "~/Documents/GitHub/eegstats/eegstats/R/eegstats.R",
+    "project_path" : "R/eegstats.R",
+    "properties" : {
+        "cursorPosition" : "0,25",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
