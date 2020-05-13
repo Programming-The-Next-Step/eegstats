@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1228805158",
+    "hash" : "3716282616",
     "id" : "E5FA2A86",
-    "lastKnownWriteTime" : 1589402131,
-    "last_content_update" : 1589402131090,
+    "lastKnownWriteTime" : 1589403253,
+    "last_content_update" : 1589403253672,
     "path" : "~/Documents/GitHub/eegstats/eegstats/R/main.R",
     "project_path" : "R/main.R",
     "properties" : {
-        "cursorPosition" : "63,2",
-        "scrollLine" : "48"
+        "cursorPosition" : "56,1",
+        "scrollLine" : "36"
     },
     "read_only" : false,
     "read_only_alternatives" : [
