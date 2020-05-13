@@ -1,0 +1,1139 @@
+setwd("/Users/rfreichel/Downloads/") #keep cheatsheet in downloads folder
+
+#shortcuts
+# comment multiple lines: command, shift, C
+# tilde ~:OPTION N
+# clear console: control + l
+# or sign: |
+
+#set up session
+rm(list=ls()) #remove  all objects from environment
+setwd() #set workspace with pathname as input
+getwd() #check workspace
+
+#search function
+?'while' #search key words
+? #such function
+??function_name # search functions / full names
+#' @describeIn  # Roxygen block
+
+#install packages
+install.packages() #first install package
+library() #unwrap package
+package:FunctionInPackage # if package is not called then always call functions from package like this
+
+#working environment
+ls() #returns names of all objects in global environment
+apropos('cor') #finds all functions with the name cor in it
+
+#remove objects with letter in it
+rm(list=ls(pattern = "n")) #remove  environment
+rm(list=x,pos=1) #pos=1: remove x from global environment
+
+
+#READING AND WRITING FILES ----
+#other functions in foreign package (read.spss)
+read.table() #reading in files
+read.csv() #reading in csv files
+write.csv2(mymatrix, "mymatrix.csv") # writing an excel file, just open with matlab
+write.table(data, file = "sometable.txt") #wrinting in files / Error ("line did not have x elements" then use fill = TRUE for filling NAs)
+write.csv(blue_extracted, file = "blue_eyes.csv") #write it into a csv file
+read.table("sometable.txt") #use read.table options (header, sep, nrows, ...)
+save(object,file_name.RData) #general for saving objects in R, then load (..)
+source(file = "function.R") #run r scripts, store all output in file from console with sink()
+read.csv() #open comma separated excel sheet / csv sheet
+read.csv2 #to open Excel sheets (csv when csv2 when commas are used as decimal point)
+scan() #reads data into vector or list from console or file, when typing values after scan(), comment.char= "#" to allow comments in code
+write.table(d, "Q19.xls", sep="\t", quote=FALSE, dec=",", row.names=F) #write file for excel to open
+sink() #temporarily store all the output that normally is printed to the console in a text file
+read.spss("C:/PathToFile/dataset.sav", to.data.frame=TRUE) #read .sav file with package foreign
+data <- read.csv('xyz', na.strings=c('','NA')) # read in empty cells as NA
+
+#MODES
+#initialize vectors of length n
+numeric(1) #numeric(n)
+logical(1)
+character(1)
+#check mode
+mode() #check mode (list, matrix, ...)
+str() #check what data structure (dxd matrix or single value)
+is(g, "vector") #general formula for checking: is(object, 'class')
+is.logical()
+is.numeric()
+#convert to mode
+as.character()
+as.logical()
+#check length
+length(v1)
+#When vectors of different modes are combined, R converts the vectors to one and the same
+#mode, because elements in a vector can only be of one mode.
+
+#comparison of values
+x == y #exact comparison of numbers
+identical(x,y) #exact comparison of numbers
+all.equal(x,y) #uses a tolerance (diff < 1.5e-8) of number comparison (e.g. sqrt(2) * sqrt(2) == 2)
+length(unique(x)) == 1 # are all objects within vector x the same?
+
+# sort function
+data[order(A, B, B),] #sorts all values of variables (A;B;C) in this hierarchy
+data[order(data$A,-data$B,-data$C),] # here A is increasing, and B and C are decreasing order ->  minus in front denotes decreasing
+
+#rank function
+rank(x) #returnes sample ranks of values in vector (ties can be handled with ties.method = ... argument)
+
+#ODD AND EVEN NUMBERS
+seq(1, by = 2, len = 20) #simulates 20 odd numbers
+(1:20)*2-1 #simulate 20 odd numbers
+1:10*2 #even numbers
+seq(2,20,by=2) #even numbers
+x[x %% 2 == 0] <- 0 #change all even numbers in x to 0
+x %% 2 == 0 #see whether remainer is 0 / does x consist of even numbers?
+
+#ABSOLUTE NUMBERS
+x[x<0] <- -x[x<0] #turns all negative values into absolute / positive ones by multiplying those with -1(-)
+sqrt(x^2) #squares all numbers and then computes square roots
+abs(x)
+
+
+#MODELS
+class() #checks class of object, particularly models
+names() #checks all objects / names of model
+summary() #gives summary of model statistics, can be extracted with summary$...
+
+##INDEXING ------
+#VECTORS ----
+vec = vector(mode = character, length = 2); # initalize a vector´ with length = 10;"
+v1 = c(1,2,3) #create a vector
+vector <- seq(from = -5, to = 5, by = .5) #sequence with start, end, stepsize, optional: length.out: how long should sequence be
+vector = (-10:10)/2 #first goes from -10 to 10 in one vector, then divided by 2, same as above
+c(c(1,2), c(1)) #combine vectors into one
+v2 <- sample(v1,2) #create a vector of random samples with length = 4 with sample function
+a == b # Test if each element in vector a is equal to the same element in vector b
+#repeat a vector
+rep(1,3) #rep(object, number of repititions)
+rep(1,5) #rep_len(object, length.out) with length 5
+rep_len(c(1,2,3), 500) #repeat vector (1,2,3) until length.out argument (500) limit is reached
+
+#indexing matrices
+v1[-5] #get everything except the 5th element / remove 5th element
+v1[v1 < 2]
+age[gender == 'male'] #select age of only males
+x[x < 0 | abs(x) >2] #either / or values of x smaller 0 or absolute value larger than 2
+x[x > 0 & abs(x) == 2] #two conditions with & specified
+dataset[dataset$eyeColor== 'brown',] #when indexing for a condition in a specific column, then set condition in row part and leave comma before column part!
+grades[grades$gradeA >5 & grades$gradeB > 5 & grades$`averageAandB` > 5.5,] #use | sign if or condition
+x$prescore[x$age>25] #as a way to index two conditions with $ sign, here prints prescores of all > 25
+#REMEMBER: comma in the back as we select conditions for rows
+rev(x)[1] #index last value in vector x: by reversing it and refering to the first value
+x[length(x)] #index last value in vector x
+which(all[,1] %in% some) # index multiple elements in matrix all, gives vector
+data <- data[c(2:nrow(data)),] # you cannot delete rows but just index all others and redefine it
+#creating vectors
+#  -1  2 -3  4 -5  6 -7  8 -9 10
+(1:10) * c(-1 ,1)
+
+
+#DATA FRAMES ----
+#in data frame just add all elements that belong to it!
+data.frame(subject = rep(1:5, each = 2),
+           time = rep(c('t1
+                        ', 't2'), 5),
+           score = c(7,8,8,8,9,8,9,7,7,6))
+#Three ways of indexing in dataframes
+df$A #extracts variable A
+df['A'] #extracts variable /column A, keeps dataframe structure
+df[['A']] #extracts variable A, keeps only values, to prefer!
+#indexing a subset in a dataframe
+subset(df1, sex == "male") #subset of dataframe
+df1[,c('A','B')] # subset of the data (only A and B)
+dataframe[['variable']] #indexes all values of variable / column in dataframe, different for matrices
+df[length(dataframe)] #indexing last value in dataframe
+#creating a data frame with columns (condOne, condTwo, tstat, pval) and 20 rows for each column
+myRes <- data.frame(condOne = character(20), condTwo = character(20),
+                    tStat = numeric(20), pVal = numeric(20), stringsAsFactors = FALSE)
+
+
+
+
+#LISTS ----
+str(mylist) #get an overview of a list
+View(mylist) #print / display list
+na.omit(myList) #remove NAs from list
+#in list just add all elements that belong to it! names are automaticall given, if not then define with names(l) <- c(..)
+list(subject = 1:5,
+     time = c('t1', 't2'),
+     score1 = c(7,8,9,7,8),
+     score2 = c(6,8,8,7,8))
+#use indexing (extract numbers, no structure), especially when used for operations
+l <- list(a <- 1:5,b <- function(x) rev(x),d <- function(x) x^2) #random list
+l[3](2) #index function data framw as third element of list, not possible to enter input (2)
+l[[3]](2) #index function as third element of list, possible to enter input (2)
+# adding things to a list in a loop / function:one can index categorical objects in a list to add them
+summaryFun <- function(myDF) {
+  mylist <- list() # first initialize an empty list in
+  for (i in names(x)) {
+    mylist[[i]] <- list(mean = mean(x[i]),sd = sd([i])) #add things to list with index i (no number but object indexed)
+  }
+}
+unlist(x) #unlist list x
+#indexing list in lists
+l <- list(x = 1:5)
+l <- list(1,l)
+l[2] #indexes second element from list (with structure)
+l[[2]] #indexes second element from list (mere element without structure)
+l[[2]][[1]] #indexes entire input in list 2 (no structure)
+l[[2]][[1]][5] # fifth element of list 5
+l[[2]]$x[5] #if second element is vector then possible to index vector with $vector
+
+#MATRICES ----
+length(matrix)#total number of entries in matrix can be accessed by length(matrix)
+rbind(M, colSums(M)) #use rbind with new row to add as input!
+cbind() #for adding columns, use cbind()
+t() #for transposing a matrix
+str() #check structure of a matrix, in multiplication end structure is: bxc when multiplying axb *cxd
+diag() #extract diagnonal or create diagnonal matrix
+as.dist(cor(matrix)) #shows only half of correlation matrix: correlations between variables, omits redundant half
+colnames(mymatrix) <- c('strings for all columns') # column names / labels, same for rownames
+
+#which function
+#which(x condition)
+#returns the index of values that meet condition
+#in matrices it returnes the single index (byrow) -> no row/colum notation of indices
+which(m[c(2,4,6),] == 1) # shows values = 1 in even numbers
+m[seq(from = 2, to = 6, by = 2),][which(m[seq(from = 2, to = 6, by = 2),] == 1)] <- 0 #select those values and set to 0
+
+
+#indexing matrices
+l1$m1[2,2] <- 0 #change a value in matrix
+#indexing rows then condition in row part with comma afterwards
+M[M[,1]<5,] #Select those rows for which the value in the first column is less than 5.
+M[,-4] #select all but the fourth column
+M[seq(2, 6, by = 2), ][which(M[seq(2, 6, by = 2), ] == 1)] <- 0 # Replace all 1s in the even rows of `M` by 0s.
+M
+
+
+#ARRAYS ----
+array((1:16),c(2,2,2,2)) # a four dimensional array of 2 by 2 by 2 by 2 with as elements 1 to 16.
+
+
+#Subset Function: Indexing for vectrors, matrices or data frmes ----
+subset(grades, gradeA > 5 & gradeB > 5 & average >= 5.5) #indexing with subset function and & signs
+#indexing of values that don't meet a condition with | sign
+failStudents <- subset(grades, gradeA <= 5 | gradeB <= 5 | average < 5.5) #students that meet any of the conditions
+#either gradeA smaller than 5 or gradeB smaller than 5 or average smaller than 5.5
+
+#NAs,
+#often divided by 0 leads to NAs
+#dealing with NAs
+a[!is.na(a)] #deleting all NAs from a vector
+mean(a, na.rm = TRUE) #calculating mean without NAs
+#!!! x == NA #you cannot check for NAs like this!!
+is.na(x) #check NAs -> prints TRUE for NA and FALSE for non-NA in x
+cor(data, use="pairwise.complete.obs") # use pairwise complete obs. if NAs in cor.matrix
+
+#Infinite anf Finite Numbers
+is.infinite() #check infinites
+is.nan #checks whether not a numver -> positive or negative infinity (≠is.na(): checks for missing numbers)
+
+#STRINGS
+a <- paste("sub", 1:3, sep = "_") #creates sub_1, sub_2 -> paste together
+b <- paste("some", "other", "string", sep = "_") #creates some_other_string
+grep(pattern = "checkforblah", b) #check for patterns in paste, if 0 then no pattern with blah
+#grep output is 1 (correct: pattern exists) or integer (0) (pattern does not exist)
+#in grep pattern use: + (match 1 or more times), ^ (match start of line), $ (match end of line), [] (match any single character from within a bracket)
+# or . (a single character of any value)
+gsub(pattern = "some_", replacement = "", b) #replace patterns with another replacement pattern in dataset/vector b
+strsplit(x = some_string, split = '_') #splits strings after _
+strsplit(data, 'E') # split the string with numbers after the "E" in-between
+
+#DATA GENERATION ----
+#uniform numbers
+runif(20,0,100) #Create 20 uniform random numbers between 0 and 100
+#runif(n, min = min, max = max) ... uniform distribution
+sample(c(0:100), 20, replace=T)#could generate uniform random numbers using sampling with replacement.
+
+#normally distributed numbers
+x <- rnorm(100, 100, 15)
+var(x) #sample variance
+
+#binomial data
+rbinom(n = 50, size = 25, prob = .5) #simulates binomial distribution: 50 binomial random numbers: (e.g. simulate 50 experiments of 25 coin-flips).
+
+#time series data
+ts(data, start, frequency) #create time-series object, ex: t <- ts(rnorm(96),start=2000,frequency=12)
+
+#other data
+rexp(n, rate) #exponential data
+rgamma(n, shape, scale) #gamma
+rchisq(n, df) #chi square
+rlnorm(n, meanlog, sdlog) #lognormal
+
+
+#CHECKS / USEFUL functions -----
+identitcal(x,y) #are x and y identical
+setdiff(list.a, list.b) # shows elements that do not overlap in list a and list b: list a here should be more complete
+min(x==y)==1 #are x and y identitical with respect to their minimum
+sort(s,decreasing = TRUE) #sort s from highest to lowest
+unique() #returns the unique numbers of a vector, removed all elements in vector that appear several times (non-unique)
+length(unique(dice)) == 5 #example of unique: all dice (5) come up different, then 5 unique values after throwing dice
+all(x) #are all values in x TRUE? #converts several values in vector to a single TRUE or FALSE
+#example for all(): all(X == Y) #outputs one TRUE value and checks whether all are the same (TRUE)
+any(x) #are any values in x TRUE? #converts several values in vector to a single TRUE or FALSE
+readline() #readline reads a line from the terminal (in interactive use) -> e.g hangman
+sign(x) #returns 1 if positive, -1 if negative and 0 if zero
+which(x == max(x), arr.ind = T) # index rows / columns of maximum in maxtrix x
+
+#see whether x has different sign of the correlation (negative vs. positive) than y (before x now y)
+sign(lOOCors/cor0) #if signs changed (between x and y) -> then input becomes negative
+
+#Factors and factor levels
+#factors are categorical variables and consist of levels
+city <- factor(c("Amsterdam","London")) #city as a categorical variable
+#encode factor levels (labels that correspond to numbers)
+v <- as.factor(v) #automatically finds factor levels and adds them to the structure
+is.factor(v) #check whether factor levels have been imported
+nlevels(x) #check number of factor levels
+
+
+#OTHER SIGNS
+#%/% calculates the division quotient / remainder
+10 %% 2 #is 0 -> 5 times 2 fit perfectly into 10 therefore remainder is 0
+
+#WEEK 2
+#IF STATEMENTS ----
+
+#define used variables (a and b)
+a <- 1
+b <- 1.3
+
+#write if loop
+# for several conditions, use round brackets in every logical condition
+# conditions have to be logical statements (TRUE or FAlSE), use double == or > or <
+# use & (both conditions), | (one or the other condition) or logical negation ! (a != 0, a is not 0)
+if( (a > 0) & (b < 2))
+{
+  print('Yes')
+}
+
+#structure of more complex loops
+#with elseif and else, use curly brackets after every keyword and before the next one
+a <- -3
+if (a > 0)
+{
+  b <- 10
+} else if (a < -10){
+  b <- -5
+} else {
+  b <- 100
+}
+a + b
+
+#vectorized if else statements
+ifelse(conditon, if true, if false)
+#ifelse is vectorized so just enter vectors -> no need for additional loop
+#if statements don't work for vectors (input has to be one value), ifelse(...) doesn't work for vectors
+#NOT POSSIBLE to assign within ifelse statement (if true or false)
+ifelse(x[i] > x[i+1],maximum_value <- x[i], x[i]) #WRONG! No assignment within ifelse statement
+
+
+# statements to check whether sth is true
+# Method 1: R automatically evaluates truth in function call
+minmax <- function(x)
+{
+  x[1]==min(x)&x[length(x)]==max(x) # just the == will be evaluated to TRUE or FALSE
+  isTRUE(min(x) == x[1] & max(x) == x[length(x)]) #isTrue() can explicitly evaluate it
+  if (min(x) == x[1] & max(x) == x[length(x)]) { print('TRUE') } else { print('FALSE') } #if else print TRUE / FALSE
+}
+
+#LOOPS ----
+#structure of while loop
+while(conditon){ #condition has to be evaluated to length 1 and either TRUE or FALSE, also % / | / !
+  body #The commands in the body are executed until condition is / becomes FALSE.
+}
+#never manipulate i or x in loop when beginning with "for (i in x)"
+# condition in while loop needs to be evaluated as a single TRUE or FALSE (no TRUE TRUE FALSE) possible
+# while loop only useful if number of iterations unknown - otherwise use for-loop
+
+#if object created in loop and in return-statement -> returned output in console -> save function call as object to
+#save output / in-looop object
+x <- myFunction() #save output / returned objects
+
+#to start while startment, the condition first has to be defined as not meeting the condition
+letter_sampled = 'b'
+while (letter_sampled != 'a') {
+  letter_sampled <- sample(letters, 1)
+}
+
+#loop  with counter (counts how many iterations of the loop)
+counter <- 0
+while((wallet > 0) & (wallet < 20) & counter <= 10) #several conditions in while
+{
+  counter <- counter + 1
+  ...
+}
+
+#for loop, for loop are while loops that run for fixed number of iterations
+for(i in 1:n) { #body is evaluated n times
+  body
+}
+
+#example for loop
+for(i in 1:2)
+{
+  print(i)
+}
+
+
+# use keywords in loop
+  # next skips to the next evaluation / iteration of the loop
+  # break completely stops the evaluation of the loop
+
+
+#nested for loop and if statements
+# for every opening curly bracket, after keyowrd, there needs to be a closing curly bracket
+# in nested loops it will first finish inner loop with first value of outer loop
+for(i in x)
+{
+  if(i%% 2 == 0)
+  {
+    x[i] <- 0
+  }
+} # loop and if-statement
+
+#For loop that runs a command n times (i = 1:n) without incorporating i
+x <- 50
+for (i in 1:5) {
+  x <- x + 1
+}
+print(x) # x ends up 55, in first iteration: 50 +1, in second: 51 + 1, in fifth: 54 + 1 = 55
+
+#use keepgoing condition of while loop and change it to stop it!
+keepggoing <- TRUE
+while (keepggoing) {
+  if (x > y) {
+    keepggoing <- FALSE
+  }
+}
+
+# loop that indexes string
+IDs <- unique(ori_scores$subject_id) # unique IDs
+objects <- unique(ori_scores$object)
+
+for (s in IDs) {
+  s_index <- which(IDs == s) # index for string
+  for (o in objects) {
+    o_index <- which(objects == o) # index for string
+    ori_scores_averaged[s_index,o_index] <- mean(ori_scores[ori_scores$subject_id == s & ori_scores$object == o,3])
+  }
+}
+
+
+#create subset in loop -> create list
+lapply(list_to_loop_over, function_that_should_be_applied) #if run then function applied for every item of list
+function_that_should_be_applied <- function(x) {
+  myTitle <- paste('Boxplot from condition', list$cond,
+                   main = myTitle) #set title depending on which condition is plotted
+  boxplot(score ~ list$cond)
+}
+
+
+
+#APPLICATIONS OF FOR LOOPS
+
+#1. CREATING A VECTOR
+
+#APPROACH 1: use x[i+1] to define next step in loop as modification of current i
+#How do I get from x[i] to x[i+1]
+x <- numeric(length = 7) #defining an empty vector with length /
+x[1] <- 3 #define first element as starting point
+for (i in 1:length(x)){ #over all elements of x {
+  x[i+1] <- x[i] +2 } #use x[i+1] to define next step in loop as modification of current i
+
+#Analogously, how do I get from x[i-1] to x[i]?
+#define first position x[1] and
+x[1] <- 3
+for(i in 2:9){
+  x[i] <- 2 * x[i-1] } #change x[i-1] to get to x[i]
+
+
+#APPROACH 2: use (i in 1:n) loop vector definition (1:n) as basis for vector - modify number i, no starting point x[1] required
+#How do I get i to respective value /position in vector?
+for(i in 1:8)
+{
+  x[i] <- 2*i + 1 #using i in operation to get to vector
+}
+
+#2. GAME OF DICE
+#for rolling dice, replace = TRUE required (sonst keins wiederverwenden)
+#simulate rolling of two dice
+dice1 <- sample(1:6, 1, replace=TRUE) #roll the dice 1
+dice2 <- sample(1:6, 1, replace=TRUE) #roll the dice 2
+#BETTER:
+#the same dice three times or rolling three different dice makes no difference:
+dice <- sample(1:6, 2, replace=TRUE) #roll two dice in one simulation
+
+#3. FINDING MAXIMA / MINIMA
+maximum <- - Inf #define a baseline for comparison: infinite or -infinite
+
+#4. LOOP OVER VARIABLES
+for (thisVariable in names(myData)) { #here the variable is indexed by its label -> HERE DATA FRAME INDEXING USED!
+  if (is.numeric(myData[[thisVariable]])) {
+    print(mean(myData[[thisVariable]]))
+    numberofnumericvariables <- numberofnumericvariables + 1
+  }
+}
+
+
+#adding values to an existing vector
+#1. Method: use append()
+} else if (x[i] == maximum) {
+  maximum_vector <- append(maximum_vector,i) #add index of new maximum to existing one
+}
+#2. Method: use c() to create new vector
+pos <- c(pos, i) # if current value is equal to the existing maximum, we add the index of the current }
+
+#3. Method: just create an empty vector beforehand and then index the value for every i
+column_maximum[i] <- max(x[,i]) #here i is 1:ncol(x), so it saves maximum of columns in vector
+
+#4. LOOP WITH SUBSET DEFINITION AND OPERATION (MEAN ETC.)
+for(i in 1:length(allEyeColors)) {
+  mySubset <- subset(myDF, eyeColor == allEyeColors[i]) # Create subset for the 'i'th eyecolor
+  thisMean <- mean(mySubset$score) # Calculate mean of score for this subset
+  print(paste("The mean score for eyecolor", allEyeColors[i], "is: ", thisMean)) # Paste some text that describes the result and print it
+}
+
+#IMPLICIT LOOPS
+
+
+#Overview Apply family -----
+# -apply: matrix
+# -sapply: list, returnes a vector of numerics
+# -lapply: list, returnes a list of numerics
+# -tapply: data.frame -> conditional mean calculation
+# -aggregate: similae to tapply -> give a grouping variable and outcome variable (e.g. for conditional means)
+
+#APPLY loops: matrix operation on column / row
+#apply for working with matrices usually
+#apply is just a general function with apply(X, MARGIN, FUN, ...), here margin is all rows (1) or columns (2)
+apply(x, margin, function, function_arguments) #structure of apply loop, margin (1= rows, 2 = columns, function_arguments (e.g, na.rm = TRUE))
+apply(x,1,min) #example: get minimum of each row
+apply(m, 2, function(x){sum(x > 2)}) # more complex function definition in apply, here: count the column
+
+#other useful functions for matrices /data.frames
+colSums(x[, 1:2]) #sums of first two columns
+rowSums()
+rowMeans()
+colMeans(x[, c('Jan', 'Feb')]) #means of first two columns
+
+#tAPPLY loops: data.frame (factor variable ( conditons)
+#computes a measure (mean etc..) for each factor variable in a vector.
+#tapply automatically applies function to all factors specified in index variable
+#in tapply when specifying several indexes / conditions, then use list() as one input argument for index
+tapply(X, INDEX, FUN = NULL)# here index is one or more factors of x
+tapply(x$prescore[x$age>25], list(x$group[x$age>25],x$sex[x$age>25]), mean) #example: mean prescores of >25 years old in both groups
+tapply(mydf$height, list(mydf$eyeCol, mydf$cond), mean) #use list to specify conditions
+
+#lApply loops: elements in list
+#lapply works for lists and applies FUN to every single element of the list -> input of the function (i) is every element of
+#the list (results)
+lapply(results,function(i){i$p.value}) #example: extracts p-value of every element of the list "results" (a list of t-test results)
+#possible to apply explicit / separate function specified somewhere else
+lapply(mylist, MyFunction)
+#function specified in lapply also possible:
+head(lapply(myList, function(x) x$statistic)) #here extract t-statistic is function
+
+#sapply
+#for list, returnes a vector of numerics
+hist(sapply(myList, function(x) x$statistic), main = "Succes!")
+#example for sapply and function
+out <- sapply(ind, leaveOneOut, data)
+leaveOneOut <- function(ind, data) {
+  out <- cor(data[-ind,1], data[-ind,2]) # computes correlation without one data point i
+  return(out)
+}
+
+#aggregate
+#specify metric and then all conditional variables to which function should be applied
+aggregate(x,by, FUN)
+#even if only one variable in by (conditions) -> it has to be put in a list
+aggregate(df$Days, list(df$Sex, df$Age), mean) #means of days for sex and age
+
+#Remember when writing loops
+#Is operation (subtraction, addition, etc.) actually assigned to the original object to implement operation?
+#use != in while loops (for while not)
+#in while loop with several conditions, all conditions have to be in separate brackets
+
+#FUNCTIONS ----
+# 1. The general form when creating a function
+myFunction <- function(x) { #myFunction is name of function, x is input of function -> use value of x here in function(3), then x = 3
+  code_body #Insert code to be carried out when calling the function
+}
+
+#2. Functions operate in local environment
+# functions operate in their local environment and cannot change object in global environment
+# new objects defined in loop will not be included in global environment unless there is explcit command to return it
+# what is happening in a function stays in the function if it is not returned
+
+#3. Return function
+# return function: all outputs should be returned, not printed! return() ends function, arguments after will not be defined!
+# to return multiple objects, put them in a list and return one object (the list) / R can only return 1 object
+function(x) { return(y) }
+# sometimes operation can directly be returned, not always necessary to assign to new object!
+myMeanFunction <- function(x) {
+  return(sum(x) / length(x)) # directly returns mean, no assignment necessary
+}
+#return should always be before the last closing curly bracket from function (after for loop brackets!)
+
+#4. Saving objects from inside the loop outside in global environment
+erpdata <<- x # use double arrows inside function. Return is simply meant for printing
+
+# in loops, explicit command to print things required
+for (i in 1:n) {print(mean(m[,i])) }
+# loading a function into the workspace
+source("namefunction.R")
+# all objects used in function have to be defined
+myFunction <- function(x, myTitle) #here both x and myTitle have to be defined in every function cal
+myFunctiion(1:5, 'yay!') #here x is 1:5 and myTitle is yay!
+# use default specification of
+myFunction <- function(x, myTitle = 'defaultTitle') #here x has to be defined in function call
+myFunction(1:5) #since default is defined, title takes default title ("defaultTitle) if not further specified
+#another example with default in function
+hello <- function(hello = TRUE) { if(hello) {
+  print("hello") } else {
+    print("goodbye") }
+}
+hello() #no input in function will automatically use default value and print TRUE
+
+# example function to add five to numeric value and computes the mean
+myFunction <- function(x) {
+  x <- x + 5
+  return(mean(x))
+}
+
+# Build functions with several steps (conversion) in it
+absnew <- function(x)
+{
+  if(is.logical(x)) #first if: converts logical into numeric, no else statement
+  {
+    x <- as.numeric(x)
+  }
+  if(is.numeric(x)) #second if: uses numeric from before
+  {
+    x[x<0] <- -x[x<0]
+    return(x)
+  } else
+}
+
+# Make function also applicable to strings
+myFunction <- function(x) {
+  if (is.numeric(x)) {
+    x <- x + 5
+    return(mean(x))
+  } else {
+    stop("Please supply a numeric object to this function")
+  }
+}
+myFunction(1:5)
+myFunction("a")
+
+# NOT always necessary to define new object, but just return it immediately
+add <- function(a,b) {
+  return(a+b)
+}
+
+#functions with NA removal
+add <- function(x, na.rm = TRUE) { #just changing the default in function definition (na.rm = TRUE)
+  if(na.rm) {
+    x <- x[!is.na(x)]
+  }
+  for(i in x) {
+  ...
+  }
+# use STOP('error message') function to stop looping in certain conditions
+#stop if not numeric
+add <- function(x) {
+  if(!is.numeric(x)) {
+    stop("only numeric values allowed")
+  }
+  for(i in x) {
+    ...
+  }
+# use WARNING('warning message') to give warning message in certain condition
+  if(sum(is.na(x)) > 0) {
+    warning("NA values detected")
+  }
+
+# TESTS that a function should pass (see lecture)
+#check mode -> if numeric required then convert logical into numeric
+  if(is.logical(x)){
+    x <- as.numeric(x)}
+#check mode -> if numeric required then give warning in all
+else {cat("Warning: only numeric input allowed\n")
+print(x) }
+
+
+##How to address exam questions
+#1. what is the mode of the data to modify?
+# If matrix, then possible to use apply instead of complex for loop?
+
+#use functions in APPLY()
+apply(m, 2, function(x){sum(x > 2)}) # count the column
+
+#use switch function
+switch(expr,
+       {body 1},
+       {body 2},
+       ...)
+
+#ADDING NEW ARGUMENTS TO FUNCTION
+#introduce new argument as input of function and specify default (TRUE or FALSE)
+function(x, summarize = FALSE)
+  #code in function "if argument set TRUE" as:
+  if (summarizeFactors) { .... }
+#example: Add an argument to the function called `summarizeFactors`. If this argument is set to `TRUE`, then
+# your function should print the counts (i.e., frequencies) of factor variables. Default should be false
+summaryFun <- function(myDF, summarizeFactors = FALSE) { #introducing new argument to function with default = FALSE
+  for (thisVariable in names(myDF)) {
+    numberOfFactorVars <- 0
+    if (is.factor(myDF[[thisVariable]]) & summarizeFactors) { #if argument TRUE
+      print(table(myDF[[thisVariable]]))
+    }
+  }
+  return(numberOfFactorVars)
+}
+summaryFun(myData, summarizeFactors = TRUE)
+}}
+
+#sapply used in function call -> function call within same function
+leaveOneOutCor <- function(ind, data){
+  if(length(ind)>1){
+    out <- sapply(ind, leaveOneOutCor, data) # apply function inside function
+  }else{
+    out <- cor(data[-ind,1], data[-ind,2]) # applied for every element of list
+  }
+  return(out)
+}
+
+
+
+#PLOTTING ----
+#use other packages, such as ggplot()
+#basic plotting functions (high level)
+plot(x)
+# depends on the class of the object to plot: t (time series object), M (matrix), and D (data frame) are different classes.
+# plot.default always uses default plotting option / plot() always adapts to hidden functions for class of object
+boxplot(DV_Y ~ grouping_variable) #shows boxplot for all groups
+plot(x) #if x is just a vector, then it will be plotted against indices (1:n)/ number of data points ≈
+lines(x) #plots x with lines connecting dots
+points(x) # draw a sequence of points at the specified coordinate
+pie(x) #draws a pie chart
+hist(x) #historgram
+stem(x) #produces stem and leaf plot, useful for checking normal distribution
+# stem-leaf plot: the tens (e.g., 5|4 denotes 54).
+stripchart(x) #one dimensional scatter plots (or dot plots) of the given data
+matplot() #Plots the columns of one matrix against the columns of another.
+
+# Two plots in one
+# Method 1
+plot(a)
+par(new = TRUE) #
+plot(b)
+# Method 2: same parameter as in initial plot
+plot(a)
+lines(b)
+
+#boxplot
+boxplot(x) #gives generic boxplot for all columns in x
+boxplot (x[,2] ~ x [,1]) #gives boxplot for model y (x[,2]) ~ x (x[,1])
+# Useful parameters in boxplot:
+width = 1
+notch = T
+border = 'blue'
+
+#plot with lines
+plot(x, type = "l")
+plot(x)
+lines(x)
+
+#Barplot
+table() #will print a frequency table -> also two variables as input
+barplot(table(x)) #possible to turn a frequency table into a barplot
+col = c('red', 'green3', 'blue', 'cyan','black' ) #define colors of different bars as vector
+
+#ABLINE()
+abline(lm(y~x) #add abline by formulating linear model
+abline(linearModel) #adds regression line from linear model to plot
+abline(a,b) #for tangent at point (x,y) enter the x coordinate in the linear
+#model and see y - value -> then use y-value for a = intercept and determine
+#slope by building the derivative of the lm and then entering x - value of the
+#tangent point
+
+#Plotting options (low level plotting functions)
+rainbow(NumberOfColours) #rainbow colours
+
+#axis
+axis(1, at = 1:10) #reset axes, x-axis(1) and at coordinates 1:10
+
+#ticks at axis
+axis(2, c(min(y), 0,max(y)), labels = TRUE)
+
+#text
+text(x,y, 'text') #specifiy coordinates for text field without vector
+text(145,120, 'r = 0.4') #coordinates have to be the ones from the x and y axes
+
+#add lines
+lines(density(x)) #add lines of density function (after plot(xyz) - function)
+
+#colors
+colors()[1] #for indexing i get number / built-in color names
+col = 1 #in graphical functions uses colors from palette()
+
+
+# 1. loops and plotting
+# loop over groups to be plotted
+plot(x, type = 'N') #start with blank canvas, set type = N
+#then run loop
+for (thisgroup in length(unique(gr))) { ## loop over length of unique groups (how many groups)
+  lines(y[gr == thisgroup], lwd = 3, rainbow(3)[thisgroup]) #here groups are indexed, only y values with thisgroup
+}
+legend('topright', legend = unique(gr)) #set legend topright
+legend(2, 2, legend = unique(gr)) #set legend to coordinates (2,2)
+
+#loop over conditions
+  # first define unique group labels that will be indexed inside loop
+  # still (ALWAYS) loop over length of unique group labels
+#for i in lenth(allCond)
+allCond <- unique(dat$condition) #first define unique / group names
+for(i in 1:length(allCond)) { #loop over length of all conditions
+  for(j in 1:length(allCond)) {
+    if(i != j){ #here comparison of all different groups with t-test
+      x <- dat$RT[dat$condition == allCond[i]] #define group x
+      y <- dat$RT[dat$condition == allCond[j]] #define group y
+      result <- t.test(x, y)
+      print(c(allCond[i], allCond[j], result$statistic, result$p.value))
+    }
+  }
+}
+#alternatively
+all_conditions <- unique(dat$condition)
+for (i in 1:(length(all_conditions)-1)) {
+  one_condition <- all_conditions[i]
+  second_condition <- all_conditions[i+1]
+  x <- dat$RT[dat$condition == one_condition]
+  y <- dat$RT[dat$condition == 'b']
+  print(cor.test(x,y))
+}
+
+
+
+
+#2. PAR parameter
+par (cex = 3) #all following plots will have parameter (cex = 3)
+#par is reset as soon as plotting region is cleared
+#reset plot with bar.
+backupsetting <- par()
+par(backupsetting) #resets all plotting settings
+par(n2mfrow(3)) #divides plotting window into three rows and fills them up by row
+text(x, y, labels) #add text at specified position
+legend(pos, legend): #add legend
+rug(x) #add marginal distribution of data
+#dividing plotting window
+par(mfrow=c(2,3)) #before plotting the first (if loop then before/outside loop)
+
+# Useful parameters in histogram
+breaks = 30 #how many bars
+breaks=seq(-4,8,by=.2) #bars with .2 distance in area -4 until 8
+frequency = F #plots density instead of frequency
+col = 'blue' #colour = blue
+main = 'title' #xlab, ylab for axis labels
+
+#important par parameter
+cex = value #point size / size of data point (can be any number), often used when indicating proportion of data point
+col #point colour 1 (black), 2 (red) or 'blue'
+
+#filling points with color
+plot(x,y, cex = 1.5, pch = 21, col = 2, bg = 'red')  #select pch >= 21 , col (remove limits of points),  bg (fill dots)
+
+# other general plot() parameters for par()
+par() #shows all options
+mfrow() #split plotting regions into several parts, exampled: par(mfrow=c(1,3))
+xlim = c(min, max) #ylim = ..
+type = #'p' (points), 'l' (only line through datapoints), b (both line + points)
+plot(x, type = 'n') #plot nothing
+xaxt = logical #yaxt = 'n' removes axis
+bty = #type of box -> 'o' (four sided box), 'l' (L shaped box), 'n' (no box)
+pch #point symbol
+col = #border color
+bg = #fill color
+lwd #line width / thickness of lines
+lty #line type (1:6)
+las #orientation of axis labels (1:4) -> las = 1 (vertical axis labels (e.g. 0.1))
+mar #margins c(bottom, top, left, ..)
+
+# all plotting options set with par() will remain for the plotting region, need to reset them!
+
+# 3. Plotting LINEAR MODELS
+#adding a regression line within a plot
+plot(age,y, ylab = 'y', abline(lm(y~age), col = 'red')) #add regression line to plot in red
+linearmodel <- lm (y ~ x) #linear model: with outcome y and predictor x, assigned to object
+#oter linear model illustrations
+boxplot(y ~ x) #creates scatterplot with x and x
+plot(y,x) #just scatterplor with x and y
+abline(linearModel) #plots regression line with linear model
+summary(linearmodel) #prints important info on linear model
+# to get to correlation coefficient, extract the R squared and take squareroots of it
+sqrt(summary(lm(y~age))$r.squared)
+# if variance is supposed to be 225 then mean = 100 and sd = 15, variance is squared sd
+
+#connecting data points: here x/y and and x/predicted y (links to abline-regression line)
+for (i in 1:20) {
+  segments(x[i], y[i], x[i], y_predicted[i], cex = 1.5 , pch = 21, col = 2)
+  #in loop use segments(x,y,x_2, y_2)
+}
+
+#plotting functions
+# when f(x) formula given, then define as MyFunction <- function(x)
+
+#density ----
+plot(density(rnorm(10)))  #plotting density distributed numbers
+# if percent on y-axis then use density
+
+# 4. GRAPHICAL DEVICES
+dev.new() #open new graphical device
+dev.off() #close new graphical device
+# pdf() best version: plots every plot on a separate page
+pdf('filename.pdf') # initiated an empty pdf in working directory, everything that follows will be written to pdf file
+#anything to print in PDF: plot() #or legends() #will be plotted to pdf
+dev.off() #ends plotting -> everything should be plotted to pdf file and end file creation
+#alternatives to pdf('filename'): png('filename') or jpeg('filename')
+#to plot sth in pdf: pdf('filename') plot(something) dev.off()
+
+# Computing time ----
+
+#Wall time
+t1 <- Sys.time() # Record start time
+body
+t2 <- Sys.time() # Record end time
+difftime(t1, t2) # Computing time in wall time
+
+#CPU time
+system.time(
+  {body}
+) # Computing time in CPU time
+
+
+# DEBUGGING ----
+# make short comments
+# try out individual parts of code
+# never write entire function but always single lines / pieces isolated, in the end: add them together!
+# testing:
+# debugging syntax erros
+  #press control p next to bracket to jump to closing / matching bracket
+  #check warnings by R (red marks on the side)
+  #check misspellings
+# use print() statements in debugging to print values or print('I made it until here')
+
+# ISOLATION
+  # 1. comment out function or loop -> run body of code with specific vcalues (isolation)
+  # 1. set a specific value for the input / -> specific iteration (i) and see what happens
+  # inclue print('I made it this far') to see whether error happened before or after print
+
+# DEBUG FUNCTION
+# use debug() function to dive into function environment
+# opens new window and allows you to  step through function line by line
+# with enter in console
+# error will occur at the erroneous line
+debug(f) #start debugging
+f(1)
+undebug(f) #stop debugging -> removes debugging flag
+
+#BROWSER
+# use browser() function inside problem function to run code until this point and then start debugging (like with debug)
+# build it into a function to start debugging window at this point
+myfunction <- function(x) {
+  y <- 1:10
+  browser() }
+
+#TRACEBACK
+traceback() #can be called after you ran your function to see which functions were called by
+#your function
+
+#TRY FUNCTION
+#build the error in the try('error line') function so the function will give warning and continue as usual
+myfunction <- function(x) {
+  try(
+    stop('this is an error') #should be line that produces error
+  )
+}
+
+# Advanced Statistics in R ----
+
+#useful statistics functions
+t.test #t-test
+cor.test() #correlation
+lm() #linear model
+aov() #anova
+library('car') #RM ANova package
+
+#model definition
+model <- lm(y ~ x*z) #interaction model (interaction effects), lm() fits model
+summary(model) #gives summary of model
+plot(model) #then R uses hidden plot.lm function -> various qq plot (for checking assumptions)
+predict() #predicts new values based upon model
+abline() #plot predicted values vs. observed values -> with abline() plot regression line
+anova(model1, model2) #compare both model -> which model fits better (which predictor (combination) is better?)
+step(model1, trace = 0) #AIC: stepwise reduction of model and see fit
+coefficients(myline) #extracts coefficients
+
+#packages for statistical modelling
+aov #good for modelling
+ez #allows manual specification of variables
+tidyr #useful for converting long-format to short formatz
+
+longdata <- gather(...) #conversion into long format
+ezANOVA(data =, dv =, wid =, within = , between =, ...) #define model
+
+#Hierarchical modelling in R: fit different regressions (varying intercepts) per group
+library('lme4') #
+lmer(..) #standard model definition with (which_coefficient|categorical variable) as argument
+
+
+#Bayesian Analyses in R
+library('bayesfactor')
+bf1 = lmBD(iq ~ age, data = ..., progress = FALSE) #bayesian linear model definition
+allbf <- c(bf1, bf2, bf3) # all bayes factor of all models
+plot(allbf) #plot all bayes factors to see best model (highest bayes factor)
+#when comparing models: which model predicted data the best and which variable predicted data best?
+
+
+# Writing A Package in R ----
+
+# Advice:
+  # always check namespace to see what functions have been exported
+  # in scripts, don't call library(required package) but call them using requiredpackage::function
+  # add required packages in Description under Imports (>= 2.0) for version specification
+  # add all functions to one script, not separate scripts: main.r
+  # for package documentation: eegstats.r
+
+# starting
+devtools::load_all()# load R package, then you can call package
+
+# creation of package
+devtools:create('newpackage') # create a new package
+# - description file: fill in name, email, description, etc.
+# - R folder: contains scripts that do the work in the package
+usethis::use_mit_license('eegstats') # Add a license to the package
+package:FunctionInPackage # if package is not called then always call functions from package like this
+# to update package run both:
+devtools::build()
+devtools::install()
+
+
+# Writing a Package
+  #' @export # add before functions that should be exported in package. Sometimes helper script should not be exported.
+  # put several functions in one script
+  debugonce(ReadingIn) # allows to go through function step by step, call function then to go through it line by line
+
+
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+
+# DOCUMENTATION PACKAGE
+#' @section Section Description:
+#' .......text in section.......
+#' \emph{ReadingIn} # explain functions in section
+#'
+#' @docType package
+#' @name eegstats
+NULL
+
+# Testing a PACKAGE
+  usethis::use_testthat()
+
+  # test every function use all of these:
+  expect_equal()
+  expect_error()
+  expect_true()
+  # always test only one specific aspect
+
+  # example
+      library('eegstats')
+      context('Core eegstats functionality')
+      test_that('ReadingIn returns correct input matrix', {
+        x <- matrix(c(2,3,3,4),nrow = 2, ncol = 2)
+        ReadingIn(x)
+        expect_equal(length(x), length(erpdata))
+        expect_error(ReadingIn(c(1,2,3)))
+        expect_true(is.matrix(erpdata))
+      })
+
+
+
+?function # will show documentation
+
+
+
+
+
+
+# MORE ADVANCED FUNCTIONS / Coding Style -----
+# Write larger programs
+  # Start with pseudocode / comments /
+  # write subfunctions that are used in functions
+  # avoid redundancies (vector 1:3 not c(1:3))
+  # write separate functions for computations that are repeated
+  # use informative object and file names
+
+# Spacing
+  # Use spaces around binary operators (foo(x = 1) and after commas (X[i, ])
+  # write short comments
+
+# Functions
+  # follow function name with comment section / 1 sentence function description
+  # description of arguments
+  # desription of return value
+
+# Other advice
+  # Avoid unnecessary repeated assignments
+  # Avoid using data structures that grow over iterations
+  # Initialise data structures (numeric, array)
+  # Use vectorisation instead of for-loops
+  # Use indexing instead of for-loops
+
+#Vectorization -----
+# two vectors: x <- c(), y <- c(), to get elementwise operation use x + y (no loop necessary)
+# use ifelse() statement
+# pairsum()
+# when vectorizing:
+  # - try to remove for-loop and turn x[i] into x
+  # - try to turn (sm <- sm + x) into sum(x)
+  # - look at what is being returned and incorporate this in vector equation (return(1/x) becomes sum(1/x))
+# in vector operation: usually vector definition (1:3) always first done then multiplication / operation (1:3*5)
+
+# EXAM PREP -----
+
+#be quick but don't rush
+
+#pay attention to style (in the end)
+
+# other practice  tasks from Assignment 3
+#selected ones: (1. Hangman (5 points)), 2. sort (2 points), 13. Infinite Monkeys / Typewriters (2 points) + Prisoners Problem (1 point)
+#other interesting ones: t-test, chi-square test (both 2 points),
+#instead of hangman: random number generator (2 points)
+
+#plotting exam questions
+  #look out for small details
+  #determine what elements looks different (axes, plotting symbol, etc.)
+
+#always look for shorter ways to do task (apply function / ifelse, ...)
+
+#start by writing the operations / single steps outside of a loop / function -> then later put everything together
+
+
+
