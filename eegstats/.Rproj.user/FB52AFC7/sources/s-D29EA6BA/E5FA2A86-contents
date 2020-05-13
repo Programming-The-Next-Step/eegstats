@@ -55,15 +55,3 @@ GA_Plot <- function(my_erpdata, electrode = 6) {
   }
   axis(1, at = index_timepoints, labels = desired_timepoints)
 }
-
-
-
-#' LoadingDate
-#'
-#' @description  The function \emph{GA_Plot} computes the grand average ERP signal for all conditions and plots it.
-#'
-#' @export LoadingData
-#'
-LoadingDate <- function(my_erpdata) {
-  print('hi')
-}
