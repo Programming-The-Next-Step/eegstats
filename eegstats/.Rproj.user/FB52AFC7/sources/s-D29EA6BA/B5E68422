@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589354180601.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B5E68422",
+    "lastKnownWriteTime" : 1589380319,
+    "last_content_update" : 1589380319480,
+    "path" : "~/Downloads/cheatsheet_R.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "1021,39",
+        "scrollLine" : "1017"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
