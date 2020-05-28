@@ -6,7 +6,7 @@
 
 # Testing
 # # For this purpose, we will use the example dataset ERPdata from the package erp.easy.
-#library(erp.easy)
+# library(erp.easy)
 # my_erpdata <- ERPdata  # ERPdata from erp.easy will be used
 # View(my_erpdata) # subject x stimulus x time x electrodes
 
@@ -297,6 +297,3 @@ ersp <- matrix(NA, length(unique(my_erpdata[,1])), 2)   # subject x cond
 return(list(cor(erp[,1], ersp[,1]), cor(erp[,2], ersp[,2])))
 #return(cor(erp[,2], ersp[,2]))
 }
-
-
-erp_ersp_cor(my_erpdata, 10, 40)
