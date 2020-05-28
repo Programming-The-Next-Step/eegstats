@@ -6,7 +6,7 @@
 
 # Testing
 # # For this purpose, we will use the example dataset ERPdata from the package erp.easy.
-# library(erp.easy)
+#library(erp.easy)
 # my_erpdata <- ERPdata  # ERPdata from erp.easy will be used
 # View(my_erpdata) # subject x stimulus x time x electrodes
 
@@ -211,7 +211,7 @@ grand_average_ersp <- function(my_erspdata) {
   cond <- unique(my_erpdata[,2])
   time <- unique(my_erpdata[,3])
 
-  grand_average_ersp_data <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+  grand_average_ersp_data <- array(NA, dim = c(length(cond),length(time), 20))
   for (c in 1:length(cond)) { # all conditions
 
     for (t in 1:length(time)) { # all timepoints
@@ -272,18 +272,31 @@ grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data, n_cond
 grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
 
 
-# NEXT To-Dos [still working on it]
+# To-Dos
 
-# 7. cluster based permutation statistics on time - frequency data
+# 7. cluster based permutation statistics on time - frequency data [still working on it]
 
 # 8. ERSP / ERP correlation
+# I am still working on this: This function should extract a ERP and ERSP (amplitude at a certain time and electrode)
+# and then correlate it with a ERSP feature. For instance, the user should be able to enter "alpha" and "P3"
+# into the function and get a correlation coefficient as an oupzt.
+
+erp_ersp_cor <- function(my_erpdata, electrode, time_erp) {
+
+erp <- matrix(NA, length(unique(my_erpdata[,1])), 2)   # subject x cond
+
+ersp <- matrix(NA, length(unique(my_erpdata[,1])), 2)   # subject x cond
+
+  for (c in 1:length(unique(my_erpdata[,2]))) { # cond
+
+    erp[,c] <- my_erpdata[my_erpdata[,1] == my_erpdata[,1] & my_erpdata[,3] == time_erp &  my_erpdata[,2] ==  my_erpdata[s,2], electrode]
+
+    ersp[,c] <- my_erpdata[my_erpdata[,1] == my_erpdata[,1] & my_erpdata[,3] == time_erp &  my_erpdata[,2] ==  my_erpdata[s,2], electrode + 1]
+  }
+
+return(list(cor(erp[,1], ersp[,1]), cor(erp[,2], ersp[,2])))
+#return(cor(erp[,2], ersp[,2]))
+}
 
 
-
-
-
-
-
-
-
-
+erp_ersp_cor(my_erpdata, 10, 40)
