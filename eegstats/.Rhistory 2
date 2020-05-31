@@ -1,0 +1,512 @@
+ind_average_erp_data <- ind_average_erp(my_erpdata, electrode = 7, subject = c('S1', 'S2', 'S3'))
+ind_average_erp_data
+ind_average_erp <- function(my_erpdata, electrode = 6, subject = 'SO1') {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# compute grand average (GA):
+ind_average_erp_data <- array(NA, dim = c(length(subject),length(cond),length(time)));
+for (s in 1:length(subject)) { # all subjects
+for (c in 1:length(cond)) { # all conditions
+ind_average_erp_data[s,c,] <- my_erpdata[my_erpdata[,1] == subject[s] & my_erpdata[,2] == cond[c],electrode] # compute GA
+}
+}
+return(ind_average_erp_data)
+}
+ind_average_erp_data <- ind_average_erp(my_erpdata, electrode = 7, subject = c('S1', 'S2', 'S3'))
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+grand_average_erp <- function(my_erpdata, electrode = 6) {
+subjects <- unique(my_erpdata[,1])
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+#subjects <- unique(my_erpdata[,1])
+# compute grand average (GA):
+grand_average_erp_data <- array(NA, dim = c(length(subjects),length(cond),length(time)));
+for (s in 1:length(subjects)) { # all subjects
+for (c in 1:length(cond)) { # all conditions
+grand_average_erp_data[s,c,] <- my_erpdata[my_erpdata[,1] == subjects[s] & my_erpdata[,2] == cond[c],electrode] # compute GA
+}
+}
+grand_average_erp_data <- colMeans(grand_average_erp_data) #
+return(grand_average_erp_data)
+}
+grand_average_erp_data <- grand_average_erp(my_erpdata, electrode = 7)
+grand_average_erp_data
+# to update package run both:
+devtools::build()
+devtools::install()
+# starting
+devtools::load_all()# load R package, then you can call package
+# starting
+devtools::load_all()# load R package, then you can call package
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+?grand_average_erp_plot
+grand_average_ersp <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+subjects <- unique(my_erpdata[,1])
+conditions <- unique(my_erpdata[,2])
+timepoints <- unique(my_erpdata[,3])
+grand_average_ersp <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+for (c in 1:length(conditions)) { # all conditions
+for (t in 1:length(timepoints)) { # all timepoints
+frequency_average[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == conditions[c] & my_erpdata[,3] == timepoints[t], c(4:ncol(my_erpdata))])
+}
+}
+for (c in 1:length(conditions)) { # all conditions
+for (t in 1:length(timepoints)) { # all timepoints
+frequency_average[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == conditions[c] & my_erpdata[,3] == timepoints[t], c(4:ncol(my_erpdata))])
+}
+}
+grand_average_ersp <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+for (c in 1:length(conditions)) { # all conditions
+for (t in 1:length(timepoints)) { # all timepoints
+grand_average_ersp[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == conditions[c] & my_erpdata[,3] == timepoints[t], c(4:ncol(my_erpdata))])
+}
+}
+grand_average_ersp
+grand_average_ersp <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+for (c in 1:length(conditions)) { # all conditions
+for (t in 1:length(timepoints)) { # all timepoints
+grand_average_ersp[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == conditions[c] & my_erpdata[,3] == timepoints[t], c(4:ncol(my_erpdata))])
+}
+}
+heatmap(as.matrix(frequency_average[1,,]))
+heatmap(as.matrix(grand_average_ersp[1,,]))
+heatmap(as.matrix(grand_average_ersp[1,,]))
+heatmap(as.matrix(grand_average_ersp[1,,]), xlab = c(1,20))
+heatmap(as.matrix(grand_average_ersp[1,,]), xlim = c(1,20))
+heatmap(as.matrix(grand_average_ersp[1,,]), xlim = (1,20))
+grand_average_ersp
+t
+t[-1]
+t[2]
+timepoints
+heatmap(t(as.matrix(grand_average_ersp[1,,]), xlim = (1,20)))
+t(as.matrix(grand_average_ersp[1,,]))
+heatmap(t(as.matrix(grand_average_ersp[1,,])),xlim = (1,20))
+heatmap(t(as.matrix(grand_average_ersp[1,,])),xlim = (1 20))
+heatmap(t(as.matrix(grand_average_ersp[1,,]))
+=
+heatmap(t(as.matrix(grand_average_ersp[1,,])))
+heatmap(t(as.matrix(grand_average_ersp[1,,])))
+heatmap(as.matrix(grand_average_ersp[1,,]),ylim = (1,20))
+data <- t(as.matrix(grand_average_ersp[1,,])
+)
+heatmap(data)
+heatmap(data, Colv = NA, Rowv = NA,)
+heatmap(data, Colv = NA, Rowv = NA)
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)')
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+axis(1, at = index_time, labels = desired_timepoints)
+time
+data
+length(time)
+index_time
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n")
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+axis(1, at = index_time, labels = desired_timepoints)
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n")
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+axis(1, at = index_time, labels = desired_timepoints)
+axis(1, at = index_time, labels = desired_timepoints)
+axis(1, at = index_time, labels = desired_timepoints)
+axis(1, at = index_time, labels = desired_timepoints)
+axis(1, at = index_time, labels = desired_timepoints)
+axis(1, at = index_time, labRow = desired_timepoints)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400, labrow = '')
+desired_timepoints
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400, labrow = 'desired_timepoints')
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labRow = desired_timepoints)
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol =  = desired_timepoints)
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = desired_timepoints)
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = desired_timepoints)
+desired_timepoints
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = time)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+desired_timepoints
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = seq(from = time[1], to = time[length(time)], by = 400,))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = timepoints)
+labRow_labe = seq(from = time[1], to = time[length(time)], by = 400)
+labRow_labe
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+labRow_label
+desired_timepoints
+index_time
+index_time
+labRow_label[2:100]
+labRow_label[c(2:100, 102:200)]
+c(2:100, 102:200)
+index_time
+labRow_label[index_time]
+labRow_label <-
+labRow_label[index_time] <- desired_timepoints
+desired_timepoints
+labRow_label[index_time]
+index_time
+desired_timepoints
+labRow_label[index_time] <- desired_timepoints
+labRow_label
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+timep
+time
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+grand_average_ersp <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+for (c in 1:length(cond)) { # all conditions
+for (t in 1:length(time)) { # all timepoints
+grand_average_ersp[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == cond[c] & my_erpdata[,3] == time[t], c(4:ncol(my_erpdata))])
+}
+}
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+labRow_label
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+grand_average_ersp <- function(my_erspdata) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+grand_average_ersp_data <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+for (c in 1:length(cond)) { # all conditions
+for (t in 1:length(time)) { # all timepoints
+grand_average_ersp_data[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == cond[c] & my_erpdata[,3] == time[t], c(4:ncol(my_erpdata))])
+}
+}
+return(grand_average_ersp_data)
+}
+grand_average_ersp(my_erpdata)
+grand_average_ersp_data
+grand_average_ersp_data <- grand_average_ersp(my_erpdata)
+grand_average_ersp_data <- grand_average_ersp_plot(my_erpdata, grand_average_ersp)
+# 2. create time frequency plot
+grand_average_ersp <- function(my_erspdata) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp)
+# 2. create time frequency plot
+grand_average_ersp_plot <- function(my_erspdata) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp)
+# 1. grand average ersp data
+grand_average_ersp <- function(my_erspdata) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+grand_average_ersp_data <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+for (c in 1:length(cond)) { # all conditions
+for (t in 1:length(time)) { # all timepoints
+grand_average_ersp_data[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == cond[c] & my_erpdata[,3] == time[t], c(4:ncol(my_erpdata))])
+}
+}
+return(grand_average_ersp_data)
+}
+grand_average_ersp_data <- grand_average_ersp_plot(my_erpdata, grand_average_ersp)
+# 1. grand average ersp data
+grand_average_ersp <- function(my_erspdata) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+grand_average_ersp_data <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+for (c in 1:length(cond)) { # all conditions
+for (t in 1:length(time)) { # all timepoints
+grand_average_ersp_data[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == cond[c] & my_erpdata[,3] == time[t], c(4:ncol(my_erpdata))])
+}
+}
+return(grand_average_ersp_data)
+}
+grand_average_ersp_data <- grand_average_ersp(my_erpdata)
+# 2. create time frequency plot
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp)
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data)
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data)
+grand_average_ersp_data
+my_erpdata
+# 2. create time frequency plot
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp[1,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data)
+# 2. create time frequency plot
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data, n_cond) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp_data[n_cond,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
+grand_average_ersp_data <- grand_average_ersp(my_erpdata)
+grand_average_ersp_data
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data, n_cond) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp_data[n_cond,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data, n_cond) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp_data[n_cond,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data, n_cond) {
+cond <- unique(my_erpdata[,2])
+time <- unique(my_erpdata[,3])
+# get the right label for the heatmap
+labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+# add correct timepoints (as in original data)
+desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+index_time <- c()
+for (i in 1:length(desired_timepoints)) {
+j <- desired_timepoints[i]
+index_time[i] <- which(time == j)
+}
+labRow_label <- NA
+labRow_label[index_time] <- desired_timepoints
+# make the heatmap
+data <- t(as.matrix(grand_average_ersp_data[n_cond,,]))
+heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
+ö
+'ö'
+install.packages("devtools")
+library("devtools")
+install_dev("cli")
+library("cli")
+# to update package run both:
+devtools::build()
+devtools::install()
+.Last.error.trace
+# to update package run both:
+devtools::build()
+devtools::install()
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+# to update package run both:
+devtools::build()
+devtools::install()
+# to update package run both:
+devtools::build()
+devtools::install()
+# to update package run both:
+devtools::build()
+devtools::install()
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+# to update package run both:
+devtools::build()
+devtools::install()
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+# starting
+devtools::load_all()# load R package, then you can call package
+# to update package run both:
+devtools::build()
+devtools::install()
+# starting
+devtools::load_all()# load R package, then you can call package
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+# DOCUMENTATION FUNCTION
+# to create documentation: all following commands should be before @export and code!
+#' Description: appears below title in section "Description"
+#' @param erpdata Data file .... # specifies the "Arguments" section
+#' @return #specifies the "Values" section
+#' @examples
+#' @details For more details, see Wikipedie page: \href{https://www.facebook.com/}
+devtools::document() # it will add all exports to namespace, need to build/install again!
+# to update package run both:
+devtools::build()
+devtools::install()
+str(my_erpdata)
