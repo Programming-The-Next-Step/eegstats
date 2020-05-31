@@ -1,0 +1,44 @@
+# eegstats - main script: René  Freichel. Last updated on 19/05/2020.
+
+# "This script contains several functions that will be the core part of the R package
+# eegstats. The first function (grand_average_plot) will plot the mean grand average ERP
+# signal over time. The second function allows the user to plot single - subject ERPs.
+
+# Testing
+# # For this purpose, we will use the example dataset ERPdata from the package erp.easy.
+# library(erp.easy)
+# my_erpdata <- ERPdata  # ERPdata from erp.easy will be used
+# View(my_erpdata) # subject x stimulus x time x electrodes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# To-Dos
+
+# 7. cluster based permutation statistics on time - frequency data [still working on it]
+
+
+
+
+
+
+
+
+

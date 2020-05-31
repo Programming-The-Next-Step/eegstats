@@ -1,0 +1,287 @@
+# eegstats - main script: René  Freichel. Last updated on 19/05/2020.
+
+# "This script contains several functions that will be the core part of the R package
+# eegstats. The first function (grand_average_plot) will plot the mean grand average ERP
+# signal over time. The second function allows the user to plot single - subject ERPs.
+
+# Testing
+# # For this purpose, we will use the example dataset ERPdata from the package erp.easy.
+# library(erp.easy)
+# my_erpdata <- ERPdata  # ERPdata from erp.easy will be used
+# View(my_erpdata) # subject x stimulus x time x electrodes
+
+
+# 1. ind_average_erp
+#' ind_average_erp
+#' @description  The function \emph{ind_average_erp} computes the single subject ERP signal for all conditions and a given electrode.
+#' @param my_erpdata Input Matrix with shape: subject x condition x time x electrodes.
+#' @param electrode A numeric value that specifies the number of electrode that should be plotted
+#' @param subject A character or a vector of characters that contains the number of subject (e.g. 'SO1')
+#' @details For more details, see Wikipedie page: \href{https://sccn.ucsd.edu/wiki/I.6:_Data_Averaging}{article}
+#' @return A matrix that contains the single-subject ERP for all conditions in a selected electrode. The matrix will be of shape condition x subject.
+#' @export ind_average_erp_data
+#' @seealso Add example of similar functions [still to be done].
+
+ind_average_erp <- function(my_erpdata, electrode = 6, subject = 'SO1') {
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  # compute grand average (GA):
+  ind_average_erp_data <- array(NA, dim = c(length(subject),length(cond),length(time)));
+  for (s in 1:length(subject)) { # all subjects
+
+    for (c in 1:length(cond)) { # all conditions
+
+      ind_average_erp_data[s,c,] <- my_erpdata[my_erpdata[,1] == subject[s] & my_erpdata[,2] == cond[c],electrode] # compute GA
+
+    }
+  }
+   return(ind_average_erp_data)
+}
+
+ind_average_erp_data <- ind_average_erp(my_erpdata, electrode = 7, subject = c('S1', 'S2', 'S3'))
+
+
+# 2. ind_average_erp_plot
+#' ind_average_erp_plot
+#'
+#' @description  The function \emph{ind_average_plot} plots the single-subject ERP.
+#' @param my_erpdata Input Matrix with shape: subject x condition x time x electrodes.
+#' @param ind_average_erp_data Input Matrix that contains the single-subject ERP for all conditions in a selected electrode. The matrix should be of shape condition x subject.
+#' @return A plot with the sinlge subject - ERP.
+#' @seealso Add example of similar functions [still to be done].
+
+# Include Example output figure:
+#\if{html}{\figure{erp.png}{options: width=100 alt="erp.png"}}
+#\if{latex}{\figure{erp.png}{options: width=7cm}}
+# This didn't work - any suggestions how to add images to R function documentation?
+
+ind_average_erp_plot <- function(my_erpdata, ind_average_erp_data) {
+
+  colours <- c('red', 'green', 'blue', 'black', 'green')
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  for (s in 1:nrow(ind_average_erp_data)) {
+
+    for (i in 1:ncol(ind_average_erp_data)) {
+
+      if (i ==1) {
+        plot(ind_average_erp_data[s,i,], type = "l", col = colours[i], ylim = c(-30,30), ylab = 'Amplitude', xlab = 'Time (ms)', xaxt = "n", main = paste('ERP Plot for ', length(cond), 'conditions'))
+      }
+
+      else if (i >= 2) {
+        lines(ind_average_erp_data[s,i,], col = colours[i])
+
+      }
+    }
+    legend('topleft', legend=cond, col=colours[1:i], lty=1, cex=0.8)
+
+    # add correct timepoints (as in original data)
+    desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400)
+
+    index_time <- c()
+
+    for (i in 1:length(desired_timepoints)) {
+
+      j <- desired_timepoints[i]
+
+      index_time[i] <- which(timepoints == j)
+
+    }
+    axis(1, at = index_time, labels = desired_timepoints)
+  }
+}
+ind_average_erp_plot(my_erpdata, ind_average_erp_data)
+
+
+
+# 3. grand_average_erp
+#' grand_average_erp
+#' @description  The function \emph{grand_average_erp} computes the grand average  ERP signal for all conditions and a given electrode.
+#' @param my_erpdata Input Matrix with shape: subject x condition x time x electrodes.
+#' @param electrode A numeric value that specifies the number of electrode that should be plotted
+#' @details For more details, see Wikipedie page: \href{https://sccn.ucsd.edu/wiki/I.6:_Data_Averaging}{article}
+#' @return A matrix that contains the grand average ERP for all conditions in a selected electrode. The matrix will be of shape condition x time.
+#' @export grand_average_erp_data
+#' @seealso Add example of similar functions [still to be done].
+
+grand_average_erp <- function(my_erpdata, electrode = 6) {
+
+  subjects <- unique(my_erpdata[,1])
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  #subjects <- unique(my_erpdata[,1])
+
+  # compute grand average (GA):
+  grand_average_erp_data <- array(NA, dim = c(length(subjects),length(cond),length(time)));
+  for (s in 1:length(subjects)) { # all subjects
+
+    for (c in 1:length(cond)) { # all conditions
+
+      grand_average_erp_data[s,c,] <- my_erpdata[my_erpdata[,1] == subjects[s] & my_erpdata[,2] == cond[c],electrode] # compute GA
+
+    }
+  }
+  grand_average_erp_data <- colMeans(grand_average_erp_data) #
+  return(grand_average_erp_data)
+}
+
+grand_average_erp_data <- grand_average_erp(my_erpdata, electrode = 7)
+
+
+# 4. grand average erp plot
+#' grand_average_erp_plot
+#' @description  The function \emph{grand_average_erp_plot} plots the grand average ERP.
+#' @param my_erpdata Input Matrix with shape: subject x condition x time x electrodes.
+#' @param grand_average_erp_data Input Matrix that contains the single-subject ERP for all conditions in a selected electrode. The matrix should be of shape condition x time.
+#' @return A plot with the grand average ERP signal.
+#' @seealso Add example of similar functions [still to be done].
+
+# Include Example output figure:
+#\if{html}{\figure{erp.png}{options: width=100 alt="erp.png"}}
+#\if{latex}{\figure{erp.png}{options: width=7cm}}
+# This didn't work - any suggestions how to add images to R function documentation?
+
+grand_average_erp_plot <- function(my_erpdata, grand_average_erp_data) {
+
+  colours <- c('blue', 'black')
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+
+    for (i in 1:nrow(grand_average_erp_data)) { # number of conditions
+
+      if (i ==1) {
+        plot(grand_average_erp_data[i,], type = "l", col = colours[i], ylab = 'Amplitude', xlab = 'Time (ms)', xaxt = "n", main = paste('ERP Plot for ', length(cond), 'conditions'))
+      }
+
+      else if (i >= 2) {
+        lines(grand_average_erp_data[i,], col = colours[i])
+
+      }
+    }
+    legend('topleft', legend=cond, col=colours[1:i], lty=1, cex=0.8)
+
+    # add correct timepoints (as in original data)
+    desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400)
+
+    index_time <- c()
+
+    for (i in 1:length(desired_timepoints)) {
+
+      j <- desired_timepoints[i]
+
+      index_time[i] <- which(time == j)
+
+    }
+    axis(1, at = index_time, labels = desired_timepoints)
+}
+grand_average_erp_plot(my_erpdata, grand_average_erp_data)
+
+
+
+
+## ERSP data ----
+# ERSP stands for event - related spectral dynamics. Instead of looking at the signal amplitude, here we
+# focus on different frequency bands (e.g. alpha: 8 - 12 Hz). Usually the input for these type of
+# analyses should have the form: subject ID x condition x time x electrodes x frequency.
+# That's a typical shape of pre - processed EEG data.
+
+#To make things a bit easier, we assume that the different electrodes in this dataset (ERPdata)
+# represent frequencies at one electrode. So here we assume that the 20 electrodesrepresent 20
+# different frequencies that have been sampled at one electrode. So electrode 1 would be 5 Hz,
+# electrode 2 would be 6 Hz until electrode 20 represents 25 Hz.
+
+# 5. grand average ersp plot
+#' grand_average_ersp
+#' @description  The function \emph{grand_average_ersp} computes the grand average  ERSP signal for all conditions and all frequencies from one electrode.
+#' @param my_erspdata Input Matrix with shape: subject ID x condition x timex frequency (from only one electrode).
+#' @details For more details, see Wikipedie page: \href{https://sccn.ucsd.edu/wiki/Chapter_11:_Time/Frequency_decomposition}{article}
+#' @return A matrix that contains the grand average ERSP for all conditions and all frequencies of one electrode. The matrix will be of shape condition x time x frequency.
+#' @export grand_average_ersp_data
+#' @seealso Add example of similar functions [still to be done].
+
+grand_average_ersp <- function(my_erspdata) {
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  grand_average_ersp_data <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+  for (c in 1:length(cond)) { # all conditions
+
+    for (t in 1:length(time)) { # all timepoints
+
+      grand_average_ersp_data[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == cond[c] & my_erpdata[,3] == time[t], c(4:ncol(my_erpdata))])
+    }
+  }
+  return(grand_average_ersp_data)
+}
+
+grand_average_ersp_data <- grand_average_ersp(my_erpdata)
+
+
+
+# 6. create time frequency plot
+#' grand_average_ersp_plot
+#' @description  The function \emph{grand_average_ersp_plot} plots the grand average ERSP as a time frequency plot.
+#' @param my_erspdata Input Matrix with shape: subject ID x condition x timex frequency (from only one electrode).
+#' @param grand_average_ersp_data A matrix that contains the grand average ERSP for all conditions and all frequencies of one electrode. The matrix will be of shape condition x time x frequency.
+#' @param ncond A numeric value that specifies which condition should be plotted (e.g. 1 for condition 1)
+#' @return A time - frequency plot with the grand average ERSP signal.
+#' @seealso Add example of similar functions [still to be done].
+
+# I wanted to include an xample output figure in the documentation:
+#\if{html}{\figure{erp.png}{options: width=100 alt="erp.png"}}
+#\if{latex}{\figure{erp.png}{options: width=7cm}}
+# This didn't work - any suggestions how to add images to R function documentation?
+
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data, n_cond) {
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  # get the right label for the heatmap
+  labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+
+  # add correct timepoints (as in original data)
+  desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+
+  index_time <- c()
+
+  for (i in 1:length(desired_timepoints)) {
+
+    j <- desired_timepoints[i]
+
+    index_time[i] <- which(time == j)
+
+  }
+
+  labRow_label <- NA
+  labRow_label[index_time] <- desired_timepoints
+
+  # make the heatmap
+  data <- t(as.matrix(grand_average_ersp_data[n_cond,,]))
+  heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
+
+
+# NEXT To-Dos [still working on it]
+
+# 2. cluster based permutation statistics
+
+
+# 3. ERSP / ERP correlation.
+
+
+
+
+
+
+
