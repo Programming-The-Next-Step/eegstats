@@ -1,0 +1,77 @@
+---
+title: "The eegstats package: ERP and ERSP Analysis and Visualization"
+author: "René Freichel"
+date: "5/30/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Description
+
+This eegstats package allows the user to analyze and visualize event - related potentials (ERPs) and event - related spectral dynamics (ERSPs). 
+
+## Basic Usage
+
+EEG data is commonly pre-processed and analyzed in Matlab using widely known package, such as "EEGLAB" (Delorme & Makeig, 2004). This package is one of the first that implement EEG analyses in R. To use the eegstats functions, the package assumes the EEG data to be pre-processed. To illustrate the analyses, we could use the ERPdata from the package erp.easy. 
+```{r my_erpdata}
+my_erpdata <- erp.easy::ERPdata
+head(my_erpdata)
+
+```
+Typically EEG data is outputted in a long - format shape Subject ID x Condition x Time x Electrodes. 
+For ERSP analyses the data is typically in a shape: Subject ID x Condition x Time x Frequency x Electrode. To illustrate the use of the functions, we pretend the existing data file contains time frequency data so all electrodes actually represent frequencies for one electrode. 
+```{r my_erspdata}
+my_erspdata <- my_erpdata
+```
+
+## Individual ERP data
+one electrode. 
+```{r }
+library('eegstats')
+```
+
+Sometimes researchers are interested in single subject ERPs to visualize outliers or inspect single-subject trends. First, we compute the single - subject ERP.
+```{r ind_average_erp_data}
+ind_average_erp_data <- ind_average_erp(my_erpdata, electrode = 7, subject = 'S1')
+```
+
+Then, we can visualize it.
+```{r ind_average_erp_plot}
+ind_average_erp_plot(my_erpdata,ind_average_erp_data)
+```
+
+## Grand Average ERP data
+We can compute the grand average ERP data.
+
+```{r grand_average_erp}
+grand_average_erp_data <- grand_average_erp(my_erpdata, electrode = 7)
+```
+
+And visualize it.
+
+```{r grand_average_erp_plot}
+grand_average_erp_plot(my_erpdata, grand_average_erp_data)
+```
+
+## ERSP: time frequency data 
+
+Compute it.
+```{r grand_average_ersp}
+grand_average_ersp_data <- grand_average_ersp(my_erspdata)
+```
+
+And visualize it.
+```{r grand_average_ersp_plot}
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
+```
+
+## Correlation ERP / ERSP
+
+
+
+
+## References
+Delorme, A., & Makeig, S. (2004). EEGLAB: an open source toolbox for analysis of single-trial EEG dynamics including independent component analysis. Journal of neuroscience methods, 134(1), 9-21.

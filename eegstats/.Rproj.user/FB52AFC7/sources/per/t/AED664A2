@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1590830873986.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4238712310",
+    "id" : "AED664A2",
+    "lastKnownWriteTime" : 1590831738,
+    "last_content_update" : 1590831738570,
+    "path" : "~/Downloads/eegstats_vignette.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "75,13",
+        "scrollLine" : "57"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

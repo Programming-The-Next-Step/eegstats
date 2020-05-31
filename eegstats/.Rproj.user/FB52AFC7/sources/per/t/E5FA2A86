@@ -1,0 +1,37 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589364817115.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+<<<<<<< Updated upstream:eegstats/.Rproj.user/FB52AFC7/sources/s-D29EA6BA/E5FA2A86
+    "hash" : "3716282616",
+    "id" : "E5FA2A86",
+    "lastKnownWriteTime" : 1589403253,
+    "last_content_update" : 1589403253672,
+    "path" : "~/Documents/GitHub/eegstats/eegstats/R/main.R",
+    "project_path" : "R/main.R",
+    "properties" : {
+        "cursorPosition" : "56,1",
+        "scrollLine" : "36"
+=======
+    "hash" : "1828955648",
+    "id" : "E5FA2A86",
+    "lastKnownWriteTime" : 1590825160,
+    "last_content_update" : 1590825160,
+    "path" : "~/Documents/GitHub/eegstats/eegstats/R/main.R",
+    "project_path" : "R/main.R",
+    "properties" : {
+        "cursorPosition" : "44,0",
+        "scrollLine" : "0"
+>>>>>>> Stashed changes:eegstats/.Rproj.user/FB52AFC7/sources/per/t/E5FA2A86
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

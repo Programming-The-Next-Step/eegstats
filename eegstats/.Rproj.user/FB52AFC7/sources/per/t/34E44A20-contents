@@ -1,0 +1,223 @@
+
+#' GA_Plot
+#'
+#' @description  The function \emph{GA_Plot} computes the grand average ERP signal for all conditions and plots it.
+#' @param my_erpdata Input Matrix with shape: subject x condition x time x electrodes.
+#' @param electrode A numeric value that specifies the number of electrode that should be plotted
+<<<<<<< Updated upstream:eegstats/R/main.R
+=======
+#' @param subject A character or a vector of characters that contains the number of subject (e.g. 'SO1')
+#' @details For more details, see Wikipedie page: \href{https://sccn.ucsd.edu/wiki/I.6:_Data_Averaging}{article}
+#' @return A matrix that contains the single-subject ERP for all conditions in a selected electrode. The matrix will be of shape condition x subject.
+#' @export ind_average_erp_data
+#' @seealso Add example of similar functions [still to be done].
+
+ind_average_erp <- function(my_erpdata, electrode = 6, subject = 'SO1') {
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  # compute grand average (GA):
+  ind_average_erp_data <- array(NA, dim = c(length(subject),length(cond),length(time)));
+  for (s in 1:length(subject)) { # all subjects
+
+    for (c in 1:length(cond)) { # all conditions
+
+      ind_average_erp_data[s,c,] <- my_erpdata[my_erpdata[,1] == subject[s] & my_erpdata[,2] == cond[c],electrode] # compute GA
+
+    }
+  }
+   return(ind_average_erp_data)
+}
+
+ind_average_erp_data <- ind_average_erp(my_erpdata, electrode = 7, subject = c('S1', 'S2', 'S3'))
+
+
+# 2. ind_average_erp_plot
+#' ind_average_erp_plot
+>>>>>>> Stashed changes:eegstats/.Rproj.user/FB52AFC7/sources/per/t/34E44A20-contents
+#'
+#'
+
+#' @details For more details, see Wikipedie page: \href{https://sccn.ucsd.edu/wiki/I.6:_Data_Averaging}{article}
+
+#' @return A plot with the Grand Average.
+
+#' @export GA_Plot
+
+GA_Plot <- function(my_erpdata, electrode = 6) {
+
+  cond <- unique(my_erpdata[,2])
+
+  subjects <- unique(my_erpdata[,1])
+
+  # compute grand average (GA):
+  GA <- array(NA, dim = c(length(unique(my_erpdata[,1])),length(unique(my_erpdata[,2])),length(unique(my_erpdata[,3]))))
+
+  for (s in 1:length(unique(my_erpdata[,1]))) { # all subjects
+
+    for (c in 1:length(unique(my_erpdata[,2]))) { # all conditions
+
+      GA[s,c,] <- my_erpdata[my_erpdata[,1] == subjects[s] & my_erpdata[,2] == cond[c],electrode] # compute GA
+
+    }
+  }
+
+<<<<<<< Updated upstream:eegstats/R/main.R
+  # plot GA
+  colours <- c('red', 'green', 'blue', 'black', 'green')
+  for (i in 1:length(cond)) {
+
+    if (i ==1) {
+      plot(colMeans(GA[,i,]), type = "l", col = colours[i], ylim = c(-15,15), ylab = 'Amplitude', xlab = 'Time (ms)', xaxt = "n")
+    }
+    if (i >= 2) {
+      lines(colMeans(GA[,i,]), col = colours[i])
+=======
+
+    for (i in 1:nrow(grand_average_erp_data)) { # number of conditions
+
+      if (i ==1) {
+        plot(grand_average_erp_data[i,], type = "l", col = colours[i], ylab = 'Amplitude', xlab = 'Time (ms)', xaxt = "n", main = paste('ERP Plot for ', length(cond), 'conditions'))
+      }
+
+      else if (i >= 2) {
+        lines(grand_average_erp_data[i,], col = colours[i])
+
+      }
+>>>>>>> Stashed changes:eegstats/.Rproj.user/FB52AFC7/sources/per/t/34E44A20-contents
+    }
+    legend('topleft', legend=cond, col=colours[1:i], lty=1, cex=0.8)
+
+<<<<<<< Updated upstream:eegstats/R/main.R
+  # add correct timepoints (as in original data)
+  timepoints <- my_erpdata[my_erpdata[,1] == 'S1' & my_erpdata[,2] == 'Negative',3]
+  desired_timepoints <- seq(from = timepoints[1], to = timepoints[length(timepoints)], by = 400)
+
+  index_timepoints <- c()
+  for (i in 1:length(desired_timepoints)) {
+    j <- desired_timepoints[i]
+    index_timepoints[i] <- which(timepoints == j)
+  }
+  axis(1, at = index_timepoints, labels = desired_timepoints)
+}
+=======
+    # add correct timepoints (as in original data)
+    desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400)
+
+    index_time <- c()
+
+    for (i in 1:length(desired_timepoints)) {
+
+      j <- desired_timepoints[i]
+
+      index_time[i] <- which(time == j)
+
+    }
+    axis(1, at = index_time, labels = desired_timepoints)
+}
+grand_average_erp_plot(my_erpdata, grand_average_erp_data)
+
+
+
+
+## ERSP data ----
+# ERSP stands for event - related spectral dynamics. Instead of looking at the signal amplitude, here we
+# focus on different frequency bands (e.g. alpha: 8 - 12 Hz). Usually the input for these type of
+# analyses should have the form: subject ID x condition x time x electrodes x frequency.
+# That's a typical shape of pre - processed EEG data.
+
+#To make things a bit easier, we assume that the different electrodes in this dataset (ERPdata)
+# represent frequencies at one electrode. So here we assume that the 20 electrodesrepresent 20
+# different frequencies that have been sampled at one electrode. So electrode 1 would be 5 Hz,
+# electrode 2 would be 6 Hz until electrode 20 represents 25 Hz.
+
+# 5. grand average ersp plot
+#' grand_average_ersp
+#' @description  The function \emph{grand_average_ersp} computes the grand average  ERSP signal for all conditions and all frequencies from one electrode.
+#' @param my_erspdata Input Matrix with shape: subject ID x condition x timex frequency (from only one electrode).
+#' @details For more details, see Wikipedie page: \href{https://sccn.ucsd.edu/wiki/Chapter_11:_Time/Frequency_decomposition}{article}
+#' @return A matrix that contains the grand average ERSP for all conditions and all frequencies of one electrode. The matrix will be of shape condition x time x frequency.
+#' @export grand_average_ersp_data
+#' @seealso Add example of similar functions [still to be done].
+
+grand_average_ersp <- function(my_erspdata) {
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  grand_average_ersp_data <- array(NA, dim = c(length(conditions),length(timepoints), 20))
+  for (c in 1:length(cond)) { # all conditions
+
+    for (t in 1:length(time)) { # all timepoints
+
+      grand_average_ersp_data[c, t,] <-  colMeans(my_erpdata[my_erpdata[,2] == cond[c] & my_erpdata[,3] == time[t], c(4:ncol(my_erpdata))])
+    }
+  }
+  return(grand_average_ersp_data)
+}
+
+grand_average_ersp_data <- grand_average_ersp(my_erpdata)
+
+
+
+# 6. create time frequency plot
+#' grand_average_ersp_plot
+#' @description  The function \emph{grand_average_ersp_plot} plots the grand average ERSP as a time frequency plot.
+#' @param my_erspdata Input Matrix with shape: subject ID x condition x timex frequency (from only one electrode).
+#' @param grand_average_ersp_data A matrix that contains the grand average ERSP for all conditions and all frequencies of one electrode. The matrix will be of shape condition x time x frequency.
+#' @param ncond A numeric value that specifies which condition should be plotted (e.g. 1 for condition 1)
+#' @return A time - frequency plot with the grand average ERSP signal.
+#' @seealso Add example of similar functions [still to be done].
+
+# I wanted to include an xample output figure in the documentation:
+#\if{html}{\figure{erp.png}{options: width=100 alt="erp.png"}}
+#\if{latex}{\figure{erp.png}{options: width=7cm}}
+# This didn't work - any suggestions how to add images to R function documentation?
+
+grand_average_ersp_plot <- function(my_erspdata, grand_average_ersp_data, n_cond) {
+
+  cond <- unique(my_erpdata[,2])
+  time <- unique(my_erpdata[,3])
+
+  # get the right label for the heatmap
+  labRow_label = seq(from = time[1], to = time[length(time)], by = 1)
+
+  # add correct timepoints (as in original data)
+  desired_timepoints <- seq(from = time[1], to = time[length(time)], by = 400,)
+
+  index_time <- c()
+
+  for (i in 1:length(desired_timepoints)) {
+
+    j <- desired_timepoints[i]
+
+    index_time[i] <- which(time == j)
+
+  }
+
+  labRow_label <- NA
+  labRow_label[index_time] <- desired_timepoints
+
+  # make the heatmap
+  data <- t(as.matrix(grand_average_ersp_data[n_cond,,]))
+  heatmap(data, Colv = NA, Rowv = NA, ylab = 'Frequency', xlab = 'Time (ms)', xaxt = "n", labCol = labRow_label)
+}
+
+grand_average_ersp_plot(my_erpdata, grand_average_ersp_data, n_cond = 1)
+
+
+# NEXT To-Dos [still working on it]
+
+# 2. cluster based permutation statistics
+
+
+# 3. ERSP / ERP correlation.
+
+
+
+
+
+
+
+>>>>>>> Stashed changes:eegstats/.Rproj.user/FB52AFC7/sources/per/t/34E44A20-contents

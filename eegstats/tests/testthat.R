@@ -1,7 +1,4 @@
-library('testthat')
-library('eegstats')
-
-
-
+library(testthat)
+library(eegstats)
 
 test_check("eegstats")
