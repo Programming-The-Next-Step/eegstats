@@ -1,3 +1,8 @@
+# Important
+
+This version of the package is outdated. Please see the repository eegstats_final for the final version:
+https://github.com/Programming-The-Next-Step/eegstats_final
+
 eegstats
 
 # Project
